@@ -1,9 +1,9 @@
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 Import-Module ADDSDeployment 
-Install-ADDSForest -DomainName "test.local" -DomainMode "WinThreshold" -ForestMode "WinThreshold" -InstallDNS -SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "NewMinal@123" -Force) -Force
+Install-ADDSForest -DomainName "test.local" -DomainMode "WinThreshold" -ForestMode "WinThreshold" -InstallDNS -SafeModeAdministratorPassword (ConvertTo-SecureString -AsPlainText "NewMinal@123" -Force) -Force -NoRebootOnCompletion:$true
 
-# Restart the VM
-Restart-Computer
+# Restart the computer and wait for it to come back online
+Restart-Computer -Wait -For PowerShell
 
 $groupNames = "LabUsers", "ITUsers", "HODUsers"
 
@@ -30,4 +30,3 @@ foreach ($groupName in $groupNames) {
         Add-LocalGroupMember -Group $rdpGroupName -Member $user.SamAccountName
     }
 }
-
