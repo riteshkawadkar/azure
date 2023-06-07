@@ -3,11 +3,12 @@ New-LocalUser -Name "User1" -Password (ConvertTo-SecureString "123456" -AsPlainT
 New-LocalUser -Name "User2" -Password (ConvertTo-SecureString "123456" -AsPlainText -Force) -FullName "User Two" -Description "User Two account"
 New-LocalUser -Name "User3" -Password (ConvertTo-SecureString "123456" -AsPlainText -Force) -FullName "User Three" -Description "User Three account"
 New-LocalUser -Name "User4" -Password (ConvertTo-SecureString "123456" -AsPlainText -Force) -FullName "User Four" -Description "User Four account"
-
-# Add users to admin group
 New-LocalUser -Name "localadmin" -Password (ConvertTo-SecureString "123456" -AsPlainText -Force) -FullName "Local Admin" -Description "Local Admin account"
 
-# Create PreventAdmin group
+# Add user to Administrators group
+Add-LocalGroupMember -Group "Administrators" -Member "localadmin"
+
+# Add user to PreventAdmin group
 New-LocalGroup -Name "PreventAdmin" -Description "PreventAdmin group"
 
 # Add User3 and User4 to PreventAdmin group
