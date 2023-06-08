@@ -1,3 +1,29 @@
+Install-WindowsFeature RSAT-AD-PowerShell
+Import-Module ActiveDirectory
+
+# Create the OU
+$ouName = "PreventAdmins"
+$ouPath = "OU=PreventAdmins,DC=test,DC=local"
+
+New-ADOrganizationalUnit -Name $ouName -Path $ouPath
+
+# Create the computers
+$computerNames = "lab1", "lab2", "lab3"
+$computerOU = "OU=PreventAdmins,DC=test,DC=local"
+
+foreach ($computerName in $computerNames) {
+    $computerDN = "CN=$computerName,$computerOU"
+    $password = ConvertTo-SecureString -String "NewMinal@123" -AsPlainText -Force
+    
+    New-ADComputer -Name $computerName -SamAccountName $computerName -Path $computerOU -Enabled $true -Description "Lab computer" -PasswordNeverExpires $true -PassThru |
+        Set-ADAccountPassword -NewPassword $password |
+        Enable-ADAccount
+}
+
+Write-Host "OU and computers created successfully."
+
+
+
 $groupNames = "Lab", "IT", "HOD"
 
 foreach ($groupName in $groupNames) {
