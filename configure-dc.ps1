@@ -2,8 +2,8 @@
 
 # Define variables
 $domainName = "mylab.local" # Your domain name
-$staticIP = "10.0.0.4" # Static IP for the DC, aligned with Azure subnet
-$dnsIP = "10.0.0.4" # DNS IP, typically the same as the DC for the first DC
+$staticIP = "$serverPrivateIP" # Static IP for the DC, aligned with Azure subnet
+$dnsIP = "$serverPrivateIP" # DNS IP, typically the same as the DC for the first DC
 $safeModeAdminPassword = ConvertTo-SecureString "SafeModePa$$w0rd" -AsPlainText -Force # Safe mode password
 
 # Install the AD DS role
