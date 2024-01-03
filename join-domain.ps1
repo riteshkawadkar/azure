@@ -10,13 +10,12 @@
 $domainName = "mylab.local"
 $domainUser = "adminuser"
 $domainPassword = "NewMinal@123"
-$orgUnit = "OU=Computers,DC=domain,DC=com"  # Modify this based on your domain structure
 
 
 # Domain join
 $securePassword = ConvertTo-SecureString $domainPassword -AsPlainText -Force
 $domainCredential = New-Object System.Management.Automation.PSCredential -ArgumentList $domainUser, $securePassword
-Add-Computer -DomainName $domainName -Credential $domainCredential -OUPath $orgUnit -Force -Restart
+Add-Computer -DomainName $domainName -Credential $domainCredential -Force -Restart
 
 
 
