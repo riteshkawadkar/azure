@@ -56,12 +56,6 @@ choco install sysinternals -y
 
 
 # Install IIS
-$features = @("Web-Windows-Auth", "Web-Url-Auth", "Web-Net-Ext", "Web-ASP", "Web-ISAPI-Ext", "Web-Includes")
-
-foreach($feature in $features){
-   Install-WindowsFeature -Name $feature -IncludeManagementTools -IncludeAllSubFeature
-}
-
-
+Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 # Start the World Wide Web Publishing Service
 Start-Service W3SVC
