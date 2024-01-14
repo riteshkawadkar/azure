@@ -9,12 +9,10 @@ Write-Host "====> Installing Choco packages..."
 choco --version
 choco feature enable -name=exitOnRebootDetected
 
-
 # core components
 Write-Host "====> Installing core components..."
 choco install git -y
 choco install dotnet-sdk --version=6.0.1 -y
-
 
 # text editors
 Write-Host "====> Installing text editors..."
@@ -24,11 +22,6 @@ choco install notepadplusplus -y
 Write-Host "====> Installing web browsers..."
 choco install GoogleChrome -y
 
-# git gui softwares
-Write-Host "====> Installing git gui softwares..."
-choco install git-fork -y
-
-
 # ides
 Write-Host "====> Installing IDEs..."
 choco install visualstudio2022buildtools -y
@@ -37,14 +30,13 @@ choco install visualstudio2022professional -y --package-parameters "--includeRec
 
 # ide extensions
 Write-Host "====> Installing IDE extensions..."
-choco install cppcheck -y
 choco install visualassist -y
 
 # additional softwares
 Write-Host "====> Installing additional softwares..."
 choco install postman -y
 choco install fiddler -y
-
+choco install sysinternals -y
 
 
 # Install IIS
