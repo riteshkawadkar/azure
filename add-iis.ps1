@@ -28,7 +28,7 @@ Write-Host "====> Installing Choco packages..."
 choco --version
 choco feature enable -name=exitOnRebootDetected
 
-# core components
+# core components - https://github.com/dotnetcore-chocolatey/dotnetcore-chocolateypackages
 Write-Host "====> Installing core components..."
 choco install git -y
 choco install dotnet-6.0-sdk -y
