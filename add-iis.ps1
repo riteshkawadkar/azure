@@ -38,10 +38,6 @@ choco install dotnet-6.0-windowshosting
 Write-Host "====> Installing text editors..."
 choco install notepadplusplus -y
 
-# browsers
-Write-Host "====> Installing web browsers..."
-choco install GoogleChrome -y
-
 # ides
 Write-Host "====> Installing IDEs..."
 choco install visualstudio2022buildtools -y
