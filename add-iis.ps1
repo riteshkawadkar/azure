@@ -32,6 +32,7 @@ choco feature enable -name=exitOnRebootDetected
 Write-Host "====> Installing core components..."
 choco install git -y
 choco install dotnet-sdk --version=6.0.1 -y
+choco install dotnet-6.0-windowshosting
 
 # text editors
 Write-Host "====> Installing text editors..."
