@@ -9,7 +9,8 @@ Import-Module ActiveDirectory
   
 # Store the data from ous.csv in the $ADOU variable. CSV template needs the following headers -> name, path
 $ADOUUrl = 'https://github.com/riteshkawadkar/azure/raw/main/ActiveDirectry_Lab_Scripts/ous.csv'
-$ADOU = Import-Csv $ADOUUrl
+$ADOUContent = Invoke-RestMethod -Uri $ADOUUrl
+$ADOU = Import-Csv $ADOUContent
 
 # Loop through each row containing OU details in the CSV file
 foreach ($ou in $ADOU)
@@ -29,7 +30,8 @@ Start-Sleep -Seconds 10
 
 # Import CSV containing group details
 $groupsUrl = 'https://github.com/riteshkawadkar/azure/raw/main/ActiveDirectry_Lab_Scripts/groups.csv'
-$groups = Import-Csv $groupsUrl
+$groupContent = Invoke-RestMethod -Uri $groupsUrl
+$groups = Import-Csv $groupContent
 
 # Loop through the CSV to create groups
 foreach ($group in $groups) {
@@ -51,7 +53,8 @@ Start-Sleep -Seconds 10
 
 # Store the data from users.csv in the $Users variable
 $usersUrl = 'https://github.com/riteshkawadkar/azure/raw/main/ActiveDirectry_Lab_Scripts/groups.csv'
-$Users = Import-Csv $usersUrl
+$usersContent = Invoke-RestMethod -Uri $usersUrl
+$Users = Import-Csv $usersContent
 
 # Loop through each row containing user details in the CSV file 
 foreach ($User in $Users) {
