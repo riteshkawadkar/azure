@@ -41,7 +41,8 @@ choco install notepadplusplus -y
 # ides
 Write-Host "====> Installing IDEs..."
 choco install visualstudio2022buildtools -y
-choco install visualstudio2022professional -y --package-parameters "--includeRecommended --locale en-US --passive --add Microsoft.VisualStudio.Component.CoreEditor --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools --add Microsoft.VisualStudio.Workload.DataStorageAndProcessing  --add Microsoft.VisualStudio.Workload.NativeCrossPlat --add Component.GitHub.VisualStudio  --add Microsoft.VisualStudio.Workload.ManagedDesktop "
+choco install visualstudio2022community -y --package-parameters "--includeRecommended --locale en-US --passive --add Microsoft.VisualStudio.Component.CoreEditor --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools --add Microsoft.VisualStudio.Workload.DataStorageAndProcessing  --add Microsoft.VisualStudio.Workload.NativeCrossPlat --add Component.GitHub.VisualStudio  --add Microsoft.VisualStudio.Workload.ManagedDesktop "
+# choco install visualstudio2022professional -y --package-parameters "--includeRecommended --locale en-US --passive --add Microsoft.VisualStudio.Component.CoreEditor --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools --add Microsoft.VisualStudio.Workload.DataStorageAndProcessing  --add Microsoft.VisualStudio.Workload.NativeCrossPlat --add Component.GitHub.VisualStudio  --add Microsoft.VisualStudio.Workload.ManagedDesktop "
 
 
 # ide extensions
