@@ -4,7 +4,8 @@ if ($dotNetFrameworkVersion.Release -ge 528040) {
     Write-Host ".NET Framework 4.8 is already installed."
 } else {
     # Download and install .NET Framework 4.8
-    $dotNetFrameworkInstallerUrl = 'https://download.visualstudio.microsoft.com/download/pr/3a3ff58d-2043-4dc9-a47f-44e703cd9a36/06b0170df2fca8935cd0ef002d25a5f1/ndp48-x86-x64-allos-enu.exe'
+    # https://download.visualstudio.microsoft.com/download/pr/3a3ff58d-2043-4dc9-a47f-44e703cd9a36/06b0170df2fca8935cd0ef002d25a5f1/ndp48-x86-x64-allos-enu.exe
+    $dotNetFrameworkInstallerUrl = 'https://go.microsoft.com/fwlink/?linkid=2088631'
     $dotNetFrameworkInstallerPath = "$env:TEMP\dotNetFrameworkInstaller.exe"
 
     Invoke-WebRequest -Uri $dotNetFrameworkInstallerUrl -OutFile $dotNetFrameworkInstallerPath -UseBasicParsing
