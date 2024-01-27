@@ -36,6 +36,6 @@ choco install sysinternals -y
 
 
 # Install IIS
-Install-WindowsFeature -Name Web-Server -IncludeManagementTools
+# Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 # Start the World Wide Web Publishing Service
-Start-Service W3SVC
+# Start-Service W3SVC
