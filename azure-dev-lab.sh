@@ -66,15 +66,8 @@ echo "Server Private IP Address: $serverPrivateIP"
 echo "Updating custom DNS Server in VNet: $vnetName"
 az network vnet update --name myvnet --resource-group "$resourceGroup" --set dhcpOptions.dnsServers="[\"$serverPrivateIP\"]"
 
-
-# Promote VM to Domain Controller
-# echo "Installing AD on Windows Server 2019 VM and promoting to Domain Controller"
-# az vm extension set --resource-group "$resourceGroup" --vm-name "$dcVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "$jsonFilePath" --no-wait
-# az vm extension set --resource-group "$resourceGroup" --vm-name "$dcVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings @dc_settings.json --no-wait
-
 echo "Configuring the VM as a Domain Controller"
 az vm extension set --resource-group "$resourceGroup" --vm-name "$dcVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$dcConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File install_ad_ds_and_forest.ps1\" }"
-
 
 echo "Restart the domain controller VM"
 az vm restart --resource-group "$resourceGroup" --name "$dcVmName"
@@ -98,6 +91,16 @@ az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g 
 # az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$elevenVmName"
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$iisVmName"
 
+echo "Add Multiple user to Windows 10"
+az vm extension set \
+--publisher Microsoft.Compute \
+--version 1.9 \
+--name CustomScriptExtension \
+--vm-name "$tenVmName" \
+--resource-group $resourceGroup \
+--settings "{\"fileUris\": [\"$vmAddUsersWithRDPUri\"]}" \
+--protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add_users_and_grant_rdp.ps1\"}"
+
 echo "Joining Windows 10 to Domain"
 az vm extension set \
 --publisher Microsoft.Compute \
@@ -113,7 +116,7 @@ echo "Adding USers on Windows 10 VM and granting them RDP Access"
 # az vm extension set --publisher Microsoft.Compute --version 1.9 --name CustomScriptExtension --vm-name "$tenVmName" --resource-group $resourceGroup --settings "{\"fileUris\": [\"$vmAddUsersWithRDPUri\"]}" --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add_users_and_grant_rdp.ps1\"}"
 
 
-echo "Joining Windows 11 to Domain"
+# echo "Joining Windows 11 to Domain"
 # az vm extension set --resource-group "$resourceGroup" --vm-name "$elevenVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$vmConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\" }"
 
 
@@ -137,8 +140,20 @@ az vm extension set \
 --settings "{\"fileUris\": [\"$vmAddchoco\"]}" \
 --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add-choco.ps1\"}"
 
-echo "Restart the domain controller VM"
+echo "Restart the IIS VM"
 az vm restart --resource-group "$resourceGroup" --name "$iisVmName"
+az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$iisVmName"
+
+echo "Adding Dot Net 4.8 and choco"
+az vm extension set \
+--publisher Microsoft.Compute \
+--version 1.9 \
+--name CustomScriptExtension \
+--vm-name "$iisVmName" \
+--resource-group $resourceGroup \
+--settings "{\"fileUris\": [\"$vmAddchoco\"]}" \
+--protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add-choco.ps1\"}"
+
 
 echo "Adding IIS Feature"
 az vm extension set \
