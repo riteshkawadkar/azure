@@ -16,6 +16,7 @@ choco install dotnet-6.0-windowshosting -y
 # text editors
 Write-Host "====> Installing text editors..."
 choco install notepadplusplus -y
+choco install googlechrome -y
 
 # ides
 Write-Host "====> Installing IDEs..."
