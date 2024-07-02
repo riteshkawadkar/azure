@@ -74,7 +74,7 @@ az vm restart --resource-group "$resourceGroup" --name "$dcVmName"
 
 
 echo "Creating Windows 10 Client VM"
-az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:20h2-pro:latest" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
+az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:19045.4529.240607" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 # Creating Windows 11 Client VM
 # echo "Creating Windows 11 Client VM"
