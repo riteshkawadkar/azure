@@ -77,8 +77,8 @@ echo "Creating Windows 10 Client VM"
 az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:19045.4529.240607" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 # Creating Windows 11 Client VM
-# echo "Creating Windows 11 Client VM"
-# az vm create --resource-group "$resourceGroup" --name "$elevenVmName" --image "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
+echo "Creating Windows 11 Client VM"
+az vm create --resource-group "$resourceGroup" --name "$elevenVmName" --image "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 
 echo "Creating IIS Server VM"
@@ -88,7 +88,7 @@ az vm create --resource-group "$resourceGroup" --name "$iisVmName" --image Win20
 echo "Wait for the domain controller and WIndows VM to restart"
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$dcVmName"
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$tenVmName"
-# az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$elevenVmName"
+az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$elevenVmName"
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$iisVmName"
 
 echo "Add Multiple user to Windows 10"
@@ -116,8 +116,8 @@ echo "Adding USers on Windows 10 VM and granting them RDP Access"
 # az vm extension set --publisher Microsoft.Compute --version 1.9 --name CustomScriptExtension --vm-name "$tenVmName" --resource-group $resourceGroup --settings "{\"fileUris\": [\"$vmAddUsersWithRDPUri\"]}" --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add_users_and_grant_rdp.ps1\"}"
 
 
-# echo "Joining Windows 11 to Domain"
-# az vm extension set --resource-group "$resourceGroup" --vm-name "$elevenVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$vmConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\" }"
+echo "Joining Windows 11 to Domain"
+az vm extension set --resource-group "$resourceGroup" --vm-name "$elevenVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$vmConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\" }"
 
 
 echo "Joining IIS VM to Domain"
