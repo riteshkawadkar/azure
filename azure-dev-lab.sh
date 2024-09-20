@@ -27,6 +27,10 @@ elevenVmName="ELEVENVM"
 elevenAdminUsername="elevenuser"
 elevenAdminPassword="NewMinal@123" 
 
+elevenVmName22H2="ELEVENVM"
+elevenAdminUsername="elevenuser"
+elevenAdminPassword="NewMinal@123" 
+
 vmSize="Standard_E2s_v3"
 domainName="mylab.local"
 jsonFilePath = "C:\Users\rites\Downloads\server\dc_settings.json"
@@ -79,7 +83,8 @@ az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "Micr
 # Creating Windows 11 Client VM
 echo "Creating Windows 11 Client VM"
 az vm create --resource-group "$resourceGroup" --name "$elevenVmName" --image "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
-
+echo "Creating Windows 11 22H2 Client VM"
+az vm create --resource-group "$resourceGroup" --name "$elevenVmName22H2" --image "MicrosoftWindowsDesktop:windows-11:win11-22h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 echo "Creating IIS Server VM"
 az vm create --resource-group "$resourceGroup" --name "$iisVmName" --image Win2019Datacenter --admin-username "$iisAdminUsername" --admin-password "$iisAdminPassword" --size "$vmSize" --nsg "$nsgName"
@@ -118,6 +123,7 @@ echo "Adding USers on Windows 10 VM and granting them RDP Access"
 
 echo "Joining Windows 11 to Domain"
 az vm extension set --resource-group "$resourceGroup" --vm-name "$elevenVmName" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$vmConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\" }"
+az vm extension set --resource-group "$resourceGroup" --vm-name "$elevenVmName22H2" --name CustomScriptExtension --publisher Microsoft.Compute --settings "{ \"fileUris\": [\"$vmConfigScriptUri\"], \"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\" }"
 
 
 echo "Joining IIS VM to Domain"
