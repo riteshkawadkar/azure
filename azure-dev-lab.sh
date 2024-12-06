@@ -85,6 +85,7 @@ echo "Creating Windows 11 Client VM"
 az vm create --resource-group "$resourceGroup" --name "$elevenVmName" --image "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 echo "Creating Windows 11 22H2 Client VM"
 az vm create --resource-group "$resourceGroup" --name "$elevenVmName22H2" --image "MicrosoftWindowsDesktop:windows-11:win11-22h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
+az vm create --resource-group "$resourceGroup" --name "$elevenVmName22H2" --image "MicrosoftWindowsDesktop:windows-11:win11-21h2-pro:latest" --admin-username "$elevenAdminUsername" --admin-password "$elevenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 echo "Creating IIS Server VM"
 az vm create --resource-group "$resourceGroup" --name "$iisVmName" --image Win2019Datacenter --admin-username "$iisAdminUsername" --admin-password "$iisAdminPassword" --size "$vmSize" --nsg "$nsgName"
