@@ -77,6 +77,73 @@ echo "Restart the domain controller VM"
 az vm restart --resource-group "$resourceGroup" --name "$dcVmName"
 
 
+# Add rules for additional ports
+az network nsg rule create --resource-group "$resourceGroup" --nsg-name "$nsgName" \
+    --name AllowPort8080 --priority 110 --direction Inbound --access Allow \
+    --protocol Tcp --source-port-range "*" --destination-port-range 8080 \
+    --source-address-prefix "*" --destination-address-prefix "*"
+
+az network nsg rule create --resource-group "$resourceGroup" --nsg-name "$nsgName" \
+    --name AllowPort8081 --priority 120 --direction Inbound --access Allow \
+    --protocol Tcp --source-port-range "*" --destination-port-range 8081 \
+    --source-address-prefix "*" --destination-address-prefix "*"
+
+az network nsg rule create --resource-group "$resourceGroup" --nsg-name "$nsgName" \
+    --name AllowPort8082 --priority 130 --direction Inbound --access Allow \
+    --protocol Tcp --source-port-range "*" --destination-port-range 8082 \
+    --source-address-prefix "*" --destination-address-prefix "*"
+
+
+# For port 4430
+az network nsg rule create \
+    --resource-group "MyRG" \
+    --nsg-name "MyNSG" \
+    --name "Allow-4430" \
+    --priority 400 \
+    --direction Inbound \
+    --access Allow \
+    --protocol Tcp \
+    --source-address-prefix "*" \
+    --source-port-range "*" \
+    --destination-address-prefix "*" \
+    --destination-port-range 4430
+
+# For port 4431
+az network nsg rule create \
+    --resource-group "MyRG" \
+    --nsg-name "MyNSG" \
+    --name "Allow-4431" \
+    --priority 410 \
+    --direction Inbound \
+    --access Allow \
+    --protocol Tcp \
+    --source-address-prefix "*" \
+    --source-port-range "*" \
+    --destination-address-prefix "*" \
+    --destination-port-range 4431
+
+# For port 4432
+az network nsg rule create \
+    --resource-group "MyRG" \
+    --nsg-name "MyNSG" \
+    --name "Allow-4432" \
+    --priority 420 \
+    --direction Inbound \
+    --access Allow \
+    --protocol Tcp \
+    --source-address-prefix "*" \
+    --source-port-range "*" \
+    --destination-address-prefix "*" \
+    --destination-port-range 4432
+
+# RUn on VM
+# New-NetFirewallRule -DisplayName "Allow-4430" -Direction Inbound -Protocol TCP -LocalPort 4430 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-4431" -Direction Inbound -Protocol TCP -LocalPort 4431 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-4432" -Direction Inbound -Protocol TCP -LocalPort 4432 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-8080" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-8081" -Direction Inbound -Protocol TCP -LocalPort 8081 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-8082" -Direction Inbound -Protocol TCP -LocalPort 8082 -Action Allow
+
 echo "Creating Windows 10 Client VM"
 az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:19045.4529.240607" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
