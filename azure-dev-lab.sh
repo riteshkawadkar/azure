@@ -144,8 +144,9 @@ az network nsg rule create \
 # New-NetFirewallRule -DisplayName "Allow-8081" -Direction Inbound -Protocol TCP -LocalPort 8081 -Action Allow
 # New-NetFirewallRule -DisplayName "Allow-8082" -Direction Inbound -Protocol TCP -LocalPort 8082 -Action Allow
 
-echo "Creating Windows 10 Client VM"
-az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:19045.4529.240607" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
+# Deprecated
+# echo "Creating Windows 10 Client VM"
+# az vm create --resource-group "$resourceGroup" --name "$tenVmName" --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:19045.4529.240607" --admin-username "$tenAdminUsername" --admin-password "$tenAdminPassword" --size "$vmSize" --nsg "$nsgName"
 
 # Creating Windows 11 Client VM
 echo "Creating Windows 11 Client VM"
@@ -164,28 +165,28 @@ az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g 
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$elevenVmName"
 az vm wait --created --custom "instanceView.powerState.status=='VM running'" -g "$resourceGroup" --name "$iisVmName"
 
-echo "Add Multiple user to Windows 10"
+echo "Add Multiple user to Windows 11"
 az vm extension set \
 --publisher Microsoft.Compute \
 --version 1.9 \
 --name CustomScriptExtension \
---vm-name "$tenVmName" \
+--vm-name "$elevenVmName" \
 --resource-group $resourceGroup \
 --settings "{\"fileUris\": [\"$vmAddUsersWithRDPUri\"]}" \
 --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add_users_and_grant_rdp.ps1\"}"
 
-echo "Joining Windows 10 to Domain"
+echo "Joining Windows 11 to Domain"
 az vm extension set \
 --publisher Microsoft.Compute \
 --version 1.9 \
 --name CustomScriptExtension \
---vm-name "$tenVmName" \
+--vm-name "$elevenVmName" \
 --resource-group $resourceGroup \
 --settings "{\"fileUris\": [\"$vmConfigScriptUri\"]}" \
 --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File join-domain.ps1\"}"
 
 
-echo "Adding USers on Windows 10 VM and granting them RDP Access"
+# echo "Adding USers on Windows 10 VM and granting them RDP Access"
 # az vm extension set --publisher Microsoft.Compute --version 1.9 --name CustomScriptExtension --vm-name "$tenVmName" --resource-group $resourceGroup --settings "{\"fileUris\": [\"$vmAddUsersWithRDPUri\"]}" --protected-settings "{\"commandToExecute\": \"powershell -ExecutionPolicy Unrestricted -File add_users_and_grant_rdp.ps1\"}"
 
 
