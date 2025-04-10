@@ -136,6 +136,19 @@ az network nsg rule create \
     --destination-address-prefix "*" \
     --destination-port-range 4432
 
+az network nsg rule create \
+    --resource-group "MyRG" \
+    --nsg-name "MyNSG" \
+    --name "Allow-5341" \
+    --priority 534 \
+    --direction Inbound \
+    --access Allow \
+    --protocol Tcp \
+    --source-address-prefix "*" \
+    --source-port-range "*" \
+    --destination-address-prefix "*" \
+    --destination-port-range 5341
+
 # RUn on VM
 # New-NetFirewallRule -DisplayName "Allow-4430" -Direction Inbound -Protocol TCP -LocalPort 4430 -Action Allow
 # New-NetFirewallRule -DisplayName "Allow-4431" -Direction Inbound -Protocol TCP -LocalPort 4431 -Action Allow
@@ -143,6 +156,7 @@ az network nsg rule create \
 # New-NetFirewallRule -DisplayName "Allow-8080" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow
 # New-NetFirewallRule -DisplayName "Allow-8081" -Direction Inbound -Protocol TCP -LocalPort 8081 -Action Allow
 # New-NetFirewallRule -DisplayName "Allow-8082" -Direction Inbound -Protocol TCP -LocalPort 8082 -Action Allow
+# New-NetFirewallRule -DisplayName "Allow-5341" -Direction Inbound -Protocol TCP -LocalPort 5341 -Action Allow
 
 # Deprecated
 # echo "Creating Windows 10 Client VM"
