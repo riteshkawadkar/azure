@@ -158,7 +158,11 @@ az network nsg rule create \
 # New-NetFirewallRule -DisplayName "Allow-8082" -Direction Inbound -Protocol TCP -LocalPort 8082 -Action Allow
 # New-NetFirewallRule -DisplayName "Allow-5341" -Direction Inbound -Protocol TCP -LocalPort 5341 -Action Allow
 
-# Deprecated
+
+# find ne wimages
+az vm image list --publisher "MicrosoftWindowsDesktop" --offer "Windows-10" --all --output table
+
+
 echo "Creating Windows 10 Client VM"
 az vm create   --resource-group "$resourceGroup"   --name "$tenVmName"   --image "MicrosoftWindowsDesktop:Windows-10:win10-22h2-pro:latest"   --admin-username "$tenAdminUsername"   --admin-password "$tenAdminPassword"   --size "$vmSize"   --nsg "$nsgName"
 
